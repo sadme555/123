@@ -35,7 +35,7 @@
       transform:translate(0,0)rotate(0);
     }
     100%{
-      transform:translate(0,-1000px)rotate(360deg)
+      transform:translate(0,-1000px)rotate(360deg);
     } 
   }
 
@@ -129,6 +129,7 @@
 
 </style>  
 <body background="777.jpg">
+  <!--引入动画-->
   <div>
     <div class="floattop1"></div>
     <div class="floattop2"></div>
@@ -138,6 +139,7 @@
     <div class="floattop6"></div>
     <div class="floattop7"></div>
   </div>
+  <!--基本框架-->
   <div clsaa="nav">
         <strong><span>我的博客系统</span></strong>
         <div class="spacer"></div>
@@ -152,7 +154,7 @@
             <div class="card">
                 <img src="123123.jpg" alt="">
                 <h3>微光</h3>
-                <a href="https://github.com/sadme555/123/archive/refs/heads/main.zip" target="_blank">github地址</a>
+                <a href="https://github.com/sadme555/123/archive/refs/heads/main.zip" target="_blank">github地址</a><!--设置一个超链接，便于获取github地址-->
                 <div class="counter">
                     <span>文章</span>
                     <span>分类</span>
@@ -173,7 +175,7 @@
               人恒过,然后能改；困于心，衡于虑，而后作；征于色，发于声，而后喻。入则无法家拂士，出则无敌国外患者，国恒亡。
               然后知生于忧患，而死于安乐也。
             </p>      
-            
+            <!--点赞以及其他基本button的设定-->
             <buttun id="btndz" onclick="func_dz()" type="buttun">赞</buttun><span id="dzs">0</span>
             <button class="edit-button">
                 编辑<input type="text" name="编辑" placeholder="">
@@ -185,89 +187,91 @@
                 评论<input type="text" name="编辑" placeholder="">
             </button>
             
-          <div id="postsContainer"></div>  
-            
+          <!--增加按钮-->
+            <div id="postsContainer"></div>  
           <button class="button" id="addButton">增加</button>  
           <div id="contentArea"></div>  
-            
+          <!--具体“增加”操作-->
             <script>  
-              document.getElementById("addPostButton").addEventListener("click", function() {  
-                const postsContainer = document.getElementById("postsContainer");  
-                const post = document.createElement("div");  
-                post.className = "post";  
-            
-                const title = document.createElement("div");  
-                title.className = "title";  
-                title.textContent = "............................";  
+              document.getElementById("addPostButton").addEventListener("click", function() {  //获取一个名为“addPostButton”的对象，并使用 addEventListener 给这个对象添加一个点击，
+                const postsContainer = document.getElementById("postsContainer");  //定义一个postsContainer常量并进行获取
+                
+                const post = document.createElement("div");  //定义一个post常量并获取一个div盒子，之后可以用来装新博客
+                post.className = "post";  //为这个新对象创建一个类名“post”
+                const title = document.createElement("div");  //同理
+                title.className = "title";  //同理
+                
+                title.textContent = "............................";  //内部为title的文本内容
                 post.appendChild(title);  
             
-                const timestamp = document.createElement("div");  
-                timestamp.className = "timestamp";  
-                const currentDate = new Date();  
-                timestamp.textContent = "创建时间: " + currentDate.toLocaleString();  
+                const timestamp = document.createElement("div");  //同理
+                timestamp.className = "timestamp";  //同理
+                
+                const currentDate = new Date();  //将新对象date储存在currentDate中
+                timestamp.textContent = "创建时间: " + currentDate.toLocaleString();  //toLocaleString() 可将日期转化为js从而进行读取。
                   
-                post.appendChild(timestamp);  
+                post.appendChild(timestamp);  //讲新建的timestamp对象储存在post中
                 postsContainer.appendChild(post);  
             
               }); 
               
-        var contentArea = document.getElementById('contentArea');  
+        var contentArea = document.getElementById('contentArea');  //获取元素contentArea储存在变量contentArea中
         var addButton = document.getElementById('addButton');  
-        var originalContents = {};  
-        var isEditing = {};  
-        var lastEdited = {};  
-        var createdAt = {};  
-        var articleId = 0;  
-  
-        addButton.addEventListener('click', function() {  
-            articleId++;  
-            var content = document.createElement('div');  
+        var originalContents = {};  //存储文章的原始内容
+        var isEditing = {};  //是否正在编辑
+        var lastEdited = {};  //最后的编辑时间
+        var createdAt = {};  //创建时间
+        var articleId = 0;  //成null，使文章成为一个块，独立出去
+  //四个类似块
+        addButton.addEventListener('click', function() {  //定义一个点击函数
+            articleId++;  //+1后
+            var content = document.createElement('div');  //内容：xxx
             content.classList.add('editable');  
             content.id = 'content-' + articleId;  
             content.innerText = '可在此重新编写';  
             contentArea.appendChild(content);  
   
-            var editButton = document.createElement('button');  
-            editButton.classList.add('button');  
-            editButton.innerText = '编辑';  
-            editButton.id = 'editButton-' + articleId;  
-            contentArea.appendChild(editButton);  
+            var editButton = document.createElement('button');  //编辑：创建对象，再储存
+            editButton.classList.add('button');  //增加一个类名
+            editButton.innerText = '编辑';  //用innertext属性在按钮上填写两个字“编辑”
+            editButton.id = 'editButton-' + articleId;  //使用 id 属性为 editButton 元素设置一个唯一的ID
+            contentArea.appendChild(editButton);  //使用 appendChild(editButton) 方法将 editButton 元素添加到之前获取的 contentArea 元素中
   
-            var saveButton = document.createElement('button');  
+            var saveButton = document.createElement('button');  //保存：xxx
             saveButton.classList.add('button');  
             saveButton.innerText = '保存';  
             saveButton.id = 'saveButton-' + articleId;  
             saveButton.style.display = 'none';  
             contentArea.appendChild(saveButton);  
   
-            var deleteButton = document.createElement('button');  
+            var deleteButton = document.createElement('button');  //删除：xxx
             deleteButton.classList.add('button');  
             deleteButton.innerText = '删除';  
             deleteButton.id = 'deleteButton-' + articleId;  
             contentArea.appendChild(deleteButton);  
   
-            originalContents[articleId] = content.innerText;  
-            isEditing[articleId] = false;  
-            lastEdited[articleId] = new Date().toLocaleString();  
-            createdAt[articleId] = new Date().toLocaleString();  
+            originalContents[articleId] = content.innerText;  //将新创建的 content 元素的文本内容（innerText）存储在 originalContents 对象中，以文章ID（articleId）作为键。
+            isEditing[articleId] = false;  //在 isEditing 对象中，以文章ID（articleId）作为键，将对应的值设置为 false。
+            lastEdited[articleId] = new Date().toLocaleString();  //在 lastEdited 对象中，以文章ID（articleId）作为键，显示最后一次被编辑的时间
+            createdAt[articleId] = new Date().toLocaleString();  //。。。。显示创建时间
   
-            editButton.addEventListener('click', function() {  
-                if (!isEditing[articleId]) {  
-                    content.contentEditable = true;  
-                    editButton.style.display = 'none';  
-                    saveButton.style.display = 'block';  
+            editButton.addEventListener('click', function() {  //设置一个点击按钮
+                if (!isEditing[articleId]) {  //if语句检查是否在编辑状态
+                    content.contentEditable = true;  //true，使其进行编辑
+                    editButton.style.display = 'none';  //none，在编辑时隐藏编辑按钮。
+                    saveButton.style.display = 'block';  //进行保存
                     isEditing[articleId] = true;  
                 } else {  
                     content.contentEditable = false;  
-                    editButton.style.display = 'block';  
+                    editButton.style.display = 'block';  //显示编辑按钮，使其返回编辑
                     saveButton.style.display = 'none';  
                     isEditing[articleId] = false;  
                 }  
             });  
   
-            saveButton.addEventListener('click', function() {  
-                lastEdited[articleId] = new Date().toLocaleString();  
-                alert('文章已更新，最后编辑时间为：' + lastEdited[articleId]);  
+            saveButton.addEventListener('click', function() {  //添加点击按钮
+                lastEdited[articleId] = new Date().toLocaleString();  //同理，时间
+                alert('文章已更新，最后编辑时间为：' + lastEdited[articleId]);  //使用 alert 函数显示一个弹出框并显示创建时间
             });  
   
             deleteButton.addEventListener('click', function() {  
@@ -275,16 +279,17 @@
                 editButton.remove();  
                 saveButton.remove();  
                 deleteButton.remove();  
-                alert('文章已删除，创建时间为：' + createdAt[articleId]);  
+                alert('文章已删除，创建时间为：' + createdAt[articleId]);  //同理
             });  
         });  
 </script>
+            <!--实现点赞数的累计-->
             <script>
-              var dzcs=0;
-              var dzcs=document.getElementById("dzs").innerHTML;
+              var dzcs=0;//定义一个无作用域变量
+              var dzcs=document.getElementById("dzs").innerHTML;//获得指定的dzs对象
             
-              function func_dz(){
-                    dzcs++;
+              function func_dz(){//引用函数
+                    dzcs++;//实现++
                     document.getElementById("dzs").innerHTML=dzcs;
               
               }
