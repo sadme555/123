@@ -57,7 +57,8 @@
             height:100%;
             background-repeat: no-repeat;
         }
-    @keyframes floattop{
+        
+        @keyframes floattop{
     0%{
     transform:translate(0,0)rotate(0);
     }
@@ -163,18 +164,16 @@
     .qi-307 .qi-901{
         font-size: large;
         display: inline-block;    
-        float:left;
     }
-
-
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/qweather-icons@1.3.0/font/qweather-icons.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/qweather-icons@1.3.0/font/qweather-icons.css"><!--和风天气-->
 </head>
 <body background="666.jpg">
     <div>
-        <strong><i class="qi-307" style="font-size: 50px"></i>18℃<i class="qi-901" style="font-size: 50px"></i></strong>
+        <strong><i class="qi-307" style="font-size: 50px"></i>18℃<i class="qi-901" style="font-size: 50px"></i></strong><!--调节其大小-->
     </div>
-    
+    <!--引入动画--> 
     <div>
         <div class="floattop1"></div>
         <div class="floattop2"></div>
@@ -184,6 +183,7 @@
         <div class="floattop6"></div>
         <div class="floattop7"></div>
     </div>
+    <!--基本框架-->
     <div class="main">
         <div class="header">
             <h1>blog article</h1>
@@ -242,7 +242,42 @@
             <p>lmc的个人博客</p>
         </div>
     </div>
-
 </body>
 
+
+<script src="。。。"></script>
+<script language="javascript" type="text/javascript">
+    var message;
+    var XmlHttpRequest;
+
+    //调取成功后，进行网页刷新，有点难....暂时真心学不会
+    
+    function httpStateChange(){
+        if(XmlHttpRequest.readyState == 4){     //判断异步调用是否成功
+            if(XmlHttpRequest.statues == 200||XmlHttpRequest.statues == 0){//若成功则输出
+                message = JSON.parse(XmlHttpRequest);//JSON解析转化成js可以理解的样子
+
+                console.log(meeage);   
+                console.log(XmlHttpRequest);
+            }          
+        else {                                                             //不成功就报错
+            alert("错误:HTTP状态码为:"+XmlHttpRequest.statues +",HTTP的状态信息:"+XmlHttpRequest.statusText);
+        }
+        }
+    }
+//异步调用（准备对网页进行刷新）
+    function getdata(name,value){
+        creatXmlHttpRequest();//创建XmlHttpRequest对象
+        if(XmlHttpRequest!=null){     //不是空，说明创建成功
+            XmlHttpRequest.open("get","https://api.seniverse.com/v3/weather/daily.json?key=【你的_api_key】&location=beijing&language=zh-Hans&unit=c&start=-1&days=5");//直接拷贝一个高德天气的api
+            XmlHttpRequest.onreadystatechange = httpStateChange;//http请求状态变化的函数
+            //onxxchange指的是每当readystate改变时，就会触发“onreadystatechange”事件，链接到后面的函数名
+            XmlHttpRequest.send(null);//一般习惯要发送一个请求，但在这没什么可发，所以就发null，没啥意义
+        }
+    }
+    getdata()
+    setInterval("getdata",1000*3600);//没一小时自动循环重复
+</script>
 </html>
+
+
