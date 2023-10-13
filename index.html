@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	    <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+	   
+	   
+	   
+	   <div id="app">
+		{{message1}}
+	   </div>
+	        <script type="text/javascript">
+		        var app = new Vue({
+			       el:'#app',
+			       data:{
+				    message1:'我的博客系统'
+					}
+		    });
+	        </script>
+	   
+	   <div id="app-1">
+	   	<p v-html="content"></p>
+	   </div>
+	   <script>
+	   	var app = new Vue({
+	   		el:"#app-1",
+	   		data:{
+	   			content:"<a href='https://www.baidu.com'>github网址</a>"
+	   		}
+	   	})
+	   </script>
+	   
+	   
+	   
+	   
+	   
+	   <div id="app-2">
+	    <div>
+			 <input type="button" value="添加新博客"  @click="add">
+		     <input type="button" value="移除新博客" @click="remove">
+		</div>
+		 <button id="btndz" onclick="func_dz()" type="buttun">赞</button>
+		 <span id="dzs">0</span>
+		 
+		 <h2 v-for="item in message" :title="item.name">
+		   {{item.name}}
+	   </h2>
+	   
+	   
+	   </div>
+	   <script>
+		   var app = new Vue({
+			   el:"#app-2",
+               data: {
+		       likes: 0,
+			   message:[
+				   {name:""}
+			   ]    
+		        },
+			   methods:{
+				   add:function(){
+					   this.message.push({name:"新博客在此编辑"});
+				   }, 
+				   remove:function(){
+					   this.message.shift();
+				   }
+				   
+			   },
+		   })
+	            var dzcs=0;
+	            var dzcs=document.getElementById("dzs").innerHTML;
+	               
+	            function func_dz(){
+	                    dzcs++;
+	            document.getElementById("dzs").innerHTML=dzcs;
+	                 
+	                 }
+	   </script>
+	   
+
+	   <div id="app-3">
+	     <p>{{ message }}</p>
+	     <input v-model="message">
+	   </div>
+	   <script>
+		   var app6 = new Vue({
+		     el: '#app-3',
+		     data: {
+		       message: 'Hell Vue!'
+		     }
+		   })
+	   </script>
+
+	   
+	   
+	   
+	   
+	   <div id="app-4">
+	     <p></p>
+	     <input v-model="message">
+	   </div>
+	        <script> 
+			    var app6 = new Vue({
+	                el: '#app-4',
+	                data: {
+	                message: 'Hello Vue!'
+	           }
+	         })
+            </script>
+	
+	
+	</body>
+</html>
